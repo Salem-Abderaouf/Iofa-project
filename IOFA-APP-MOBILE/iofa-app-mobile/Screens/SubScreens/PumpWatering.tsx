@@ -14,41 +14,23 @@ import {
   TouchableOpacity,
   ScrollView
 } from "react-native";
-//import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-//import * as Svg from 'react-native-svg';
-import Svg, {
-  Text as TextSvg,
-  G,
-  Line,
-  Circle,
-  Path,
-  Rect,
-} from "react-native-svg";
 import RNSpeedometer from "react-native-speedometer";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Colors from "../../src/depen/Colors";
-import DonutChartComponentR_N_S from "../../src/Svg/DonutChartComponentR_N_S";
-import LineChart from "../../src/Svg/LineChart ";
-//import { color } from "react-native-reanimated";
 
-const WindowWidth = Dimensions.get("window").width;
 
 const getRemaining = (time) => {
   const mins = Math.floor((time % 3600) / 60);
-
   const secs = Math.floor((time % 3600) % 60);
-
   const heures = Math.floor(time / 3600);
   return { mins, secs, heures };
 };
 
 const PumpWatering = ({ navigation, route }) => {
   const [startPumb, setStartPumb] = useState(false);
-  //const [time, setTime] = useState({ms:'0', s:'0', m:'0', h:'0'})
   const [remainingSecs, setRemainingSecs] = useState(0);
-
   const [meterValue, setMetreValue] = useState(0);
   const [meterValue02, setMetreValue02] = useState(0);
   const [meterValue03, setMetreValue03] = useState(0);
@@ -172,10 +154,10 @@ const PumpWatering = ({ navigation, route }) => {
                 <Text style={styles.DetailsScreenInfoTitleChapetEXT}>On</Text>
               </View>
             ) : (
-              <View style={styles.DetailsScreenInfoTitleChapeRed}>
-                <Text style={styles.DetailsScreenInfoTitleChapetEXT}>OFF</Text>
-              </View>
-            )}
+                <View style={styles.DetailsScreenInfoTitleChapeRed}>
+                  <Text style={styles.DetailsScreenInfoTitleChapetEXT}>OFF</Text>
+                </View>
+              )}
           </View>
 
           <View style={styles.DetailsScreenInfoDescription}>
@@ -209,7 +191,7 @@ const PumpWatering = ({ navigation, route }) => {
                 {" "}
                 {`${heures > 9 ? "" : "0"}${heures}:${
                   mins > 9 ? "" : "0"
-                }${mins}:${secs > 9 ? "" : "0"}${secs}`}
+                  }${mins}:${secs > 9 ? "" : "0"}${secs}`}
               </Text>
             </View>
           </View>
@@ -228,7 +210,7 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={meterValue}
-              
+
               minValue={0}
               maxValue={400}
               allowedDecimals={0}
@@ -276,12 +258,12 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={meterValue02}
-              
+
               minValue={0}
               maxValue={400}
               allowedDecimals={0}
               innerCircleStyle={{
-                backgroundColor: "transparent",
+                backgroundColor: Colors.dark,
               }}
               labels={[
                 {
@@ -337,12 +319,12 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={meterValue03}
-              
+
               minValue={0}
               maxValue={400}
               allowedDecimals={0}
               innerCircleStyle={{
-                backgroundColor: "transparent",
+                backgroundColor: Colors.dark,
               }}
               labels={[
                 {
@@ -397,16 +379,16 @@ const PumpWatering = ({ navigation, route }) => {
             />
           </View>
 
-          
 
-          
+
+
         </View>
 
-       
+
 
         <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-              electric current(Amp)
+            electric current(Amp)
           </Text>
           <Text style={styles.DetailsScreenInfoTitleTxt02}>
             0A - 100A
@@ -417,7 +399,7 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={meterValue}
-             
+
               minValue={0}
               maxValue={100}
               allowedDecimals={0}
@@ -428,7 +410,7 @@ const PumpWatering = ({ navigation, route }) => {
                   activeBarColor: "green",
                 },
 
-               
+
                 {
                   name: "P0",
                   labelColor: "red",
@@ -461,12 +443,12 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={meterValue02}
-             
+
               minValue={0}
               maxValue={100}
               allowedDecimals={0}
               innerCircleStyle={{
-                backgroundColor: "transparent",
+                backgroundColor: Colors.dark,
               }}
               labels={[
                 {
@@ -522,12 +504,12 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={meterValue03}
-             
+
               minValue={0}
               maxValue={100}
               allowedDecimals={0}
               innerCircleStyle={{
-                backgroundColor: "transparent",
+                backgroundColor: Colors.dark,
               }}
               labels={[
                 {
@@ -561,7 +543,6 @@ const PumpWatering = ({ navigation, route }) => {
               }}
               labelWrapperStyle={{
                 flexDirection: "row",
-
                 justifyContent: "flex-end",
               }}
               labelStyle={{
@@ -583,10 +564,10 @@ const PumpWatering = ({ navigation, route }) => {
           </View>
         </View>
 
-        
+
         <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-              Pumpb capacity(watt)
+            Pumpb capacity(watt)
           </Text>
           <Text style={styles.DetailsScreenInfoTitleTxt02}>
             0w - 100w
@@ -597,19 +578,18 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={50}
-             
               minValue={0}
               maxValue={100}
               allowedDecimals={0}
+              innerCircleStyle={{
+                backgroundColor: Colors.dark,
+              }}
               labels={[
                 {
                   name: "P0",
                   labelColor: "red",
                   activeBarColor: "#F85C50",
                 },
-
-               
-                
               ]}
               needleImage={require("../../src/Uploads/sppedometreRed02.png")}
               labelWrapperStyle={{
@@ -634,48 +614,43 @@ const PumpWatering = ({ navigation, route }) => {
             />
           </View>
 
-        
-        
+
+
         </View>
 
         <View style={styles.DetailsScreenInfoTitle}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-          watering lines
+            watering lines
           </Text>
         </View>
 
 
-        <View style={styles.Detailspipelines}>       
-             <Image
-              source={require("../../src/Uploads/pipeline.png")}
-              style={styles.DetailsIms}
-              
-            />
-              <Image
-              source={require("../../src/Uploads/pipeline.png")}
-              style={styles.DetailsIms}
-
-             
-            />
-              <Image
-              source={require("../../src/Uploads/pipeline.png")}
-              style={styles.DetailsIms}
-
-              
-            />
+        <View style={styles.Detailspipelines}>
+          <Image
+            source={require("../../src/Uploads/pipeline.png")}
+            style={styles.DetailsIms}
+          />
+          <Image
+            source={require("../../src/Uploads/pipeline.png")}
+            style={styles.DetailsIms}
+          />
+          <Image
+            source={require("../../src/Uploads/pipeline.png")}
+            style={styles.DetailsIms}
+          />
         </View>
 
-        <View style={styles.Detailspipelines}> 
-            <Text> Vane 01 </Text>
-            <Text> Vane 02 </Text>
-            <Text> Vane 03 </Text>
+        <View style={styles.Detailspipelines}>
+          <Text> Vane 01 </Text>
+          <Text> Vane 02 </Text>
+          <Text> Vane 03 </Text>
 
         </View>
 
-{/* Vane 01 start */}
+        {/* Vane 01 start */}
         <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-              Vane 01 (watt)
+            Vane 01 (watt)
           </Text>
           <Text style={styles.DetailsScreenInfoTitleTxt02}>
             0w - 100w
@@ -686,19 +661,18 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={90}
-             
               minValue={0}
               maxValue={100}
               allowedDecimals={0}
+              innerCircleStyle={{
+                backgroundColor: Colors.dark,
+              }}
               labels={[
                 {
                   name: "P0",
                   labelColor: "red",
                   activeBarColor: "orange",
                 },
-
-               
-                
               ]}
               needleImage={require("../../src/Uploads/sppedometreRed02.png")}
               labelWrapperStyle={{
@@ -722,42 +696,42 @@ const PumpWatering = ({ navigation, route }) => {
               }}
             />
           </View>
-        
-        
+
+
         </View>
 
         <View style={styles.ActionStyle}>
-            <TouchableOpacity onPress={() => setStartPumbFun()}>
-              <View style={styles.ActionStyleBtnGreen}>
-                <Text style={styles.ActionStyleBtnTxt}>ON</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setEdnPumbFun()}>
-              <View style={styles.ActionStyleBtnRed}>
-                <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
-              </View>
-            </TouchableOpacity>
-
-            <View style={styles.ActionStyleTemp}>
-              <Text style={styles.ActionStyleTempAbs}> Timer</Text>
-              <Text style={styles.ActionStyleBtnTxt}>
-                {" "}
-                {`${heures > 9 ? "" : "0"}${heures}:${
-                  mins > 9 ? "" : "0"
-                }${mins}:${secs > 9 ? "" : "0"}${secs}`}
-              </Text>
+          <TouchableOpacity onPress={() => setStartPumbFun()}>
+            <View style={styles.ActionStyleBtnGreen}>
+              <Text style={styles.ActionStyleBtnTxt}>ON</Text>
             </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setEdnPumbFun()}>
+            <View style={styles.ActionStyleBtnRed}>
+              <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.ActionStyleTemp}>
+            <Text style={styles.ActionStyleTempAbs}> Timer</Text>
+            <Text style={styles.ActionStyleBtnTxt}>
+              {" "}
+              {`${heures > 9 ? "" : "0"}${heures}:${
+                mins > 9 ? "" : "0"
+                }${mins}:${secs > 9 ? "" : "0"}${secs}`}
+            </Text>
+          </View>
         </View>
 
-{/* Vane 01 End */}
+        {/* Vane 01 End */}
 
 
 
-{/* Vane 02 start */}
-<View style={styles.DetailsScreenInfoTitle02}>
+        {/* Vane 02 start */}
+        <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-              Vane 02 (watt)
+            Vane 02 (watt)
           </Text>
           <Text style={styles.DetailsScreenInfoTitleTxt02}>
             0w - 100w
@@ -768,19 +742,18 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={20}
-             
               minValue={0}
               maxValue={100}
               allowedDecimals={0}
+              innerCircleStyle={{
+                backgroundColor: Colors.dark,
+              }}
               labels={[
                 {
                   name: "P0",
                   labelColor: "red",
                   activeBarColor: "orange",
                 },
-
-               
-                
               ]}
               needleImage={require("../../src/Uploads/sppedometreRed02.png")}
               labelWrapperStyle={{
@@ -804,42 +777,42 @@ const PumpWatering = ({ navigation, route }) => {
               }}
             />
           </View>
-        
-        
+
+
         </View>
 
         <View style={styles.ActionStyle}>
-            <TouchableOpacity onPress={() => setStartPumbFun()}>
-              <View style={styles.ActionStyleBtnGreen}>
-                <Text style={styles.ActionStyleBtnTxt}>ON</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setEdnPumbFun()}>
-              <View style={styles.ActionStyleBtnRed}>
-                <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
-              </View>
-            </TouchableOpacity>
-
-            <View style={styles.ActionStyleTemp}>
-              <Text style={styles.ActionStyleTempAbs}> Timer</Text>
-              <Text style={styles.ActionStyleBtnTxt}>
-                {" "}
-                {`${heures > 9 ? "" : "0"}${heures}:${
-                  mins > 9 ? "" : "0"
-                }${mins}:${secs > 9 ? "" : "0"}${secs}`}
-              </Text>
+          <TouchableOpacity onPress={() => setStartPumbFun()}>
+            <View style={styles.ActionStyleBtnGreen}>
+              <Text style={styles.ActionStyleBtnTxt}>ON</Text>
             </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setEdnPumbFun()}>
+            <View style={styles.ActionStyleBtnRed}>
+              <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.ActionStyleTemp}>
+            <Text style={styles.ActionStyleTempAbs}> Timer</Text>
+            <Text style={styles.ActionStyleBtnTxt}>
+              {" "}
+              {`${heures > 9 ? "" : "0"}${heures}:${
+                mins > 9 ? "" : "0"
+                }${mins}:${secs > 9 ? "" : "0"}${secs}`}
+            </Text>
+          </View>
         </View>
 
-{/* Vane 02 End */}
+        {/* Vane 02 End */}
 
 
 
-{/* Vane 03 start */}
-<View style={styles.DetailsScreenInfoTitle02}>
+        {/* Vane 03 start */}
+        <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-              Vane 03 (watt)
+            Vane 03 (watt)
           </Text>
           <Text style={styles.DetailsScreenInfoTitleTxt02}>
             0w - 100w
@@ -850,7 +823,9 @@ const PumpWatering = ({ navigation, route }) => {
           <View style={styles.RNSpeedometerItem}>
             <RNSpeedometer
               value={70}
-             
+              innerCircleStyle={{
+                backgroundColor: Colors.dark,
+              }}
               minValue={0}
               maxValue={100}
               allowedDecimals={0}
@@ -860,9 +835,6 @@ const PumpWatering = ({ navigation, route }) => {
                   labelColor: "red",
                   activeBarColor: "orange",
                 },
-
-               
-                
               ]}
               needleImage={require("../../src/Uploads/sppedometreRed02.png")}
               labelWrapperStyle={{
@@ -886,43 +858,43 @@ const PumpWatering = ({ navigation, route }) => {
               }}
             />
           </View>
-        
-        
+
+
         </View>
 
         <View style={styles.ActionStyle}>
-            <TouchableOpacity onPress={() => setStartPumbFun()}>
-              <View style={styles.ActionStyleBtnGreen}>
-                <Text style={styles.ActionStyleBtnTxt}>ON</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setEdnPumbFun()}>
-              <View style={styles.ActionStyleBtnRed}>
-                <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
-              </View>
-            </TouchableOpacity>
-
-            <View style={styles.ActionStyleTemp}>
-              <Text style={styles.ActionStyleTempAbs}> Timer</Text>
-              <Text style={styles.ActionStyleBtnTxt}>
-                {" "}
-                {`${heures > 9 ? "" : "0"}${heures}:${
-                  mins > 9 ? "" : "0"
-                }${mins}:${secs > 9 ? "" : "0"}${secs}`}
-              </Text>
+          <TouchableOpacity onPress={() => setStartPumbFun()}>
+            <View style={styles.ActionStyleBtnGreen}>
+              <Text style={styles.ActionStyleBtnTxt}>ON</Text>
             </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setEdnPumbFun()}>
+            <View style={styles.ActionStyleBtnRed}>
+              <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.ActionStyleTemp}>
+            <Text style={styles.ActionStyleTempAbs}> Timer</Text>
+            <Text style={styles.ActionStyleBtnTxt}>
+              {" "}
+              {`${heures > 9 ? "" : "0"}${heures}:${
+                mins > 9 ? "" : "0"
+                }${mins}:${secs > 9 ? "" : "0"}${secs}`}
+            </Text>
+          </View>
         </View>
 
-{/* Vane 03 End */}
-
-        
-
-        
+        {/* Vane 03 End */}
 
 
 
-        
+
+
+
+
+
 
 
 
@@ -993,21 +965,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     flexWrap: "wrap",
   },
-
   TextValueDonutChart: {
     fontWeight: "900",
     marginLeft: 30,
   },
-
   TestScrool: {
     flex: 1,
-
     backgroundColor: "yellow",
   },
-
   DetailsScreen: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.dark,
   },
   DetailsScreenHeader: {
     paddingHorizontal: 20,
@@ -1028,12 +996,9 @@ const styles = StyleSheet.create({
   },
   DetailsScreenInfo: {
     flex: 0.55,
-    backgroundColor: Colors.light,
+    backgroundColor: Colors.dark,
     marginBottom: 8,
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
-    marginTop: 25,
-    paddingTop: 25,
+    marginTop: 50,
   },
   DetailsScreenInfoTitle: {
     justifyContent: "space-between",
@@ -1043,7 +1008,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 10,
   },
-  
   DetailsScreenInfoTitle02: {
     justifyContent: "center",
     alignItems: "center",
@@ -1054,14 +1018,13 @@ const styles = StyleSheet.create({
   },
   DetailsScreenInfoTitleTxt: {
     fontSize: 21,
-    fontWeight: "600",
-    textAlign:'center'
+    fontFamily: 'Poppins-Medium',
+    color: Colors.light
   },
-  DetailsScreenInfoTitleTxt02:{
+  DetailsScreenInfoTitleTxt02: {
     fontSize: 18,
-    fontWeight: "600",
-    textAlign:'center'
-
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'center',
   },
   DetailsScreenInfoTitleChape: {
     width: 85,
@@ -1072,7 +1035,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 22,
     borderBottomLeftRadius: 22,
   },
-
   DetailsScreenInfoTitleChapeRed: {
     width: 85,
     justifyContent: "center",
@@ -1082,13 +1044,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 22,
     borderBottomLeftRadius: 22,
   },
-
   DetailsScreenInfoTitleChapetEXT: {
     color: Colors.white,
-    fontSize: 19,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontFamily: 'Poppins-Medium'
   },
-
   DetailsScreenInfoDescription: {
     paddingHorizontal: 20,
     marginTop: 10,
@@ -1102,7 +1062,9 @@ const styles = StyleSheet.create({
   ActionStyle: {
     flex: 1,
     alignItems: "center",
-
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
+    width: Dimensions.get('window').width,
     flexDirection: "row",
   },
   ActionStyleBtnGreen: {
@@ -1114,7 +1076,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginLeft: 20,
   },
-
   ActionStyleBtnRed: {
     width: 80,
     height: 40,
@@ -1127,27 +1088,20 @@ const styles = StyleSheet.create({
   ActionStyleTemp: {
     width: 140,
     height: 40,
-    backgroundColor: "#555",
-    justifyContent: "center",
+    backgroundColor: Colors.light,
+    flexDirection: 'row',
+    justifyContent: "space-around",
     alignItems: "center",
     borderRadius: 8,
-    marginLeft: 25,
-    position: "relative",
   },
-
   ActionStyleTempAbs: {
-    color: Colors.white,
+    color: Colors.dark,
     fontSize: 12,
-    fontWeight: "bold",
-    position: "absolute",
-    left: 2,
-    top: 0,
   },
 
   ActionStyleBtnTxt: {
-    color: Colors.white,
+    color: Colors.dark,
     fontSize: 18,
-    fontWeight: "bold",
   },
   LineShape: {
     backgroundColor: Colors.green,
@@ -1156,7 +1110,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 80,
     marginVertical: 20,
   },
-
   GraphLineContainer: {
     backgroundColor: Colors.light,
     borderRadius: 10,
@@ -1165,16 +1118,13 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     margin: 20,
     marginBottom: 5,
-
     shadowColor: "#786AB7",
-
     shadowOffset: {
       width: 0,
       height: 12,
     },
     shadowOpacity: 0.58,
     shadowRadius: 16.0,
-
     elevation: 24,
   },
   GrapgContainerSvg: {
@@ -1184,53 +1134,33 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     paddingRight: 30,
   },
-
-  /* */
-
   DanutChartSvgContainer: {
     paddingTop: 20,
     marginLeft: 90,
-    height: 200,
-    backgroundColor: "#fff",
+    height: 250,
+    backgroundColor: Colors.dark,
     flexDirection: "row",
-    // justifyContent : 'space-evenly',
     flexWrap: "wrap",
   },
-
-  /* */
-
   RNSpeedometerContainer: {
-    /*height : 30,*/
-    backgroundColor: "#fff",
-    marginBottom: 45,
+    backgroundColor: Colors.dark,
     position: "relative",
-    height: 200,
-    flexDirection: "row",
-    justifyContent:'center',
-    
-    
+    height: 250,
+    flexDirection: "row-reverse",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   RNSpeedometerItem: {
     position: "absolute",
   },
-  Detailspipelines:{
-      flexDirection:'row',
-      justifyContent:'space-around',
-     
-      alignItems:'flex-start'
-     
-
-
+  Detailspipelines: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
   },
-  DetailsIms:{
-      width:'20%',
-      resizeMode:'contain',
-      
-      height:60
-
-      
-
+  DetailsIms: {
+    width: '20%',
+    resizeMode: 'contain',
+    height: 60
   }
-  /** */
 });
-/** flex: 1, resizeMode: "contain" */
