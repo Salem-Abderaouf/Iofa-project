@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   DetailsScreenInfoTitleTxt02: {
     fontSize: 18,
-    ffontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-Medium',
     textAlign: 'center'
   },
   DetailsScreenInfoTitleChape: {
