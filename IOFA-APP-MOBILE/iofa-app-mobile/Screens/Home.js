@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import Profile from './TabScreens/Profile';
 import Hero from './HomeScreen';
 import Colors from '../src/depen/Colors';
+import Message from './TabScreens/Message';
 
 const Tab = createBottomTabNavigator();
 const globalHeaderOptions = {
@@ -18,7 +19,10 @@ const Home = () => {
           let iconName;
           if (route.name === 'Home') {
             iconName = 'home'
-          } else if (route.name === 'Profile') {
+          } else if (route.name === 'Message') {
+            iconName = 'mail'
+          }
+          else if (route.name === 'Profile') {
             iconName = 'user';
           }
           return <Icon name={iconName} size={26} color={color} />;
@@ -30,12 +34,12 @@ const Home = () => {
           backgroundColor: Colors.dark,
           position: 'absolute',
           paddingBottom: 10,
-          borderTopLeftRadius: 22,
-          borderTopRightRadius: 22,
+          borderTopColor: 'gray',
         }
       })}
     >
       <Tab.Screen name="Home" component={Hero} options={globalHeaderOptions} />
+      <Tab.Screen name="Message" component={Message} options={globalHeaderOptions} />
       <Tab.Screen name="Profile" component={Profile} options={globalHeaderOptions} />
     </Tab.Navigator>
   )
