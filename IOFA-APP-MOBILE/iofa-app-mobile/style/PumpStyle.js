@@ -15,7 +15,13 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     marginLeft: 30,
   },
-
+  logValue: {
+    marginVertical: 50,
+    width: Dimensions.get('window').width - 30,
+    alignSelf: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+  },
   TestScrool: {
     flex: 1,
     backgroundColor: "yellow",
