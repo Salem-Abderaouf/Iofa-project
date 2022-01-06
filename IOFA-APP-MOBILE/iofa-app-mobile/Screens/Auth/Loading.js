@@ -9,7 +9,7 @@ const Loading = () => {
         {
           // Our Brand Image Goes here  
         }
-        <Text style={styles.Text}>Please wait ..</Text>
+        <Text style={styles.Text}>Riofarm</Text>
       </View>
       <ActivityIndicator size="large" color={Colors.green} />
     </View>
@@ -19,12 +19,14 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    backgroundColor: Colors.dark,
   },
   Text: {
-    color: Colors.dark,
+    color: Colors.green,
     marginTop: 20,
-    fontSize: 16,
+    fontSize: 32,
+    fontFamily: 'Poppins-Medium',
   }
 })
 export default Loading;
