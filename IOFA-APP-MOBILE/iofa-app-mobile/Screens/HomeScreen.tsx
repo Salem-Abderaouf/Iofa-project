@@ -19,7 +19,6 @@ const WidthItem = Dimensions.get("window").width / 2 - 30;
 export default function HomeScreen({ navigation }) {
 
   const [ar, setAr] = useState(false);
-  const categories = ["cat", "cat02"];
 
   const Card = ({ ServiceItem }) => {
     let navigationRoute = `${ServiceItem.navigatTo}`
@@ -49,10 +48,10 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.HomeScreen}>
       <View style={styles.HomeScreenHeader}>
         <View style={styles.HomeScreenHeaderContainer}>
-          <Text style={styles.HeaderLogo}>Refarm</Text>
+          <Text style={styles.HeaderLogo}>Riofarm</Text>
           <View style={styles.notificatonIcon}>
             <Icon
-              onPress={() => { } /*navigation.navigate("Notifications")*/}
+              onPress={() => navigation.navigate("Notifications")}
               name="bells"
               size={26}
               color={Colors.white}
@@ -82,7 +81,6 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
-//<Button title ="SingOut" onPress={()=> SingOut()} />
 const styles = StyleSheet.create({
   HomeScreen: {
     flex: 1,
