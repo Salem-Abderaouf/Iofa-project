@@ -55,7 +55,7 @@ const Message = () => {
             value={pump}
           />
         </View>
-        <Text>{message}</Text>
+        <Text style={styles.smsInfo}>{message}</Text>
       </View>
     </View>
   )
@@ -86,6 +86,12 @@ const styles = StyleSheet.create({
   smsHeading: {
     fontFamily: 'Poppins-Regular',
     color: Colors.light,
+  },
+  smsInfo: {
+    fontFamily: 'Poppins-Regular',
+    marginLeft: 30,
+    marginTop: 20,
+    color: Colors.green,
   }
 })
 export default Message;
