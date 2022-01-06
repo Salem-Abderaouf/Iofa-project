@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  Image,
-  Switch,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView
-} from "react-native";
-import RNSpeedometer from "react-native-speedometer";
-import database from '@react-native-firebase/database';
+import { Text, View, Image, SafeAreaView, TouchableOpacity, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Colors from "../../src/depen/Colors";
 import DonutChartComponentR_N_S from "../../src/Svg/DonutChartComponentR_N_S";
+
+import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 import LineChart from "../../src/Svg/LineChart ";
-import styles from '../../style/PumpStyle'
+import styles from '../../style/PumpStyle';
+import PhaseOne from "../atoms/PhaseOne";
+import PhaseTwo from "../atoms/PhaseTwo";
+import PhaseThree from "../atoms/PhaseThree";
+import AmpreOne from "../atoms/AmpreOne";
+import Ampretwo from "../atoms/Ampretwo";
+import AmpreThree from "../atoms/AmpreThree";
+import Puissance from "../atoms/Puissance";
 
 const getRemaining = (time) => {
   const mins = Math.floor((time % 3600) / 60);
@@ -26,27 +26,16 @@ const getRemaining = (time) => {
 const Pump = ({ navigation, route }) => {
   const [startPumb, setStartPumb] = useState(false);
   const [remainingSecs, setRemainingSecs] = useState(0);
-  const [Pump, setTogglePump] = useState(false);
-  const [meterValue, setMetreValue] = useState(0);
-  const [meterValue02, setMetreValue02] = useState(0);
-  const [meterValue03, setMetreValue03] = useState(0);
+  const [response, setResponse] = useState(null)
 
-  const setStartPumbFun = () => {
-    setStartPumb(true);
-    setMetreValue(80);
-    setMetreValue02(90);
-    setMetreValue03(110);
-  };
-
-  const setEdnPumbFun = () => {
-    setStartPumb(false);
-    setMetreValue(0);
-    setMetreValue02(0);
-    setMetreValue03(0);
-  };
-
-  const { mins, secs, heures } = getRemaining(remainingSecs);
-
+  useEffect(() => {
+    const userID = auth().currentUser.uid;
+    const dbRef = database().ref(`users/${userID}/pump`)
+    dbRef
+      .once('value')
+      .then((res) => { setResponse(res.val().status) })
+    console.log(response)
+  })
   useEffect(() => {
     let interval = null;
     if (startPumb) {
@@ -54,13 +43,32 @@ const Pump = ({ navigation, route }) => {
         setRemainingSecs((remainingSecs) => remainingSecs + 1);
       }, 1000);
     } else {
-      //clearInterval(interval)
       setRemainingSecs(0);
     }
 
     return () => clearInterval(interval);
   }, [startPumb, remainingSecs]);
 
+
+  const setStartPumbFun = () => {
+    const userID = auth().currentUser.uid;
+    const dbRef = database().ref(`users/${userID}/pump`)
+    dbRef.update({
+      cmd: 'on',
+    })
+    setStartPumb(true);
+  };
+
+  const setEdnPumbFun = () => {
+    const userID = auth().currentUser.uid;
+    const dbRef = database().ref(`users/${userID}/pump`)
+    dbRef.update({
+      cmd: 'off',
+    })
+    setStartPumb(false);
+  };
+
+  const { mins, secs, heures } = getRemaining(remainingSecs);
   /* SVG */
   const LineCharpDataEx01 = [
     { month: "Jan", value: 70 },
@@ -77,41 +85,6 @@ const Pump = ({ navigation, route }) => {
     { month: "Dec", value: 200 },
   ];
 
-  /*doNuT chart */
-
-  const DataDonutChart = [
-    {
-      percentageDonutChartData: 8,
-      colorDonutChartData: "green",
-      maxDonutChartData: "100",
-    },
-    {
-      percentageDonutChartData: 24,
-      colorDonutChartData: "#3bceb3",
-      maxDonutChartData: "100",
-    },
-    {
-      percentageDonutChartData: 45,
-      colorDonutChartData: "blue",
-      maxDonutChartData: "100",
-    },
-    {
-      percentageDonutChartData: 80,
-      colorDonutChartData: "orange",
-      maxDonutChartData: "100",
-    },
-    {
-      percentageDonutChartData: 17,
-      colorDonutChartData: "#d2ab99",
-      maxDonutChartData: "100",
-    },
-  ];
-  const TestEvent = () => {
-    setTogglePump(!Pump)
-    const Dbref = database().ref('pump')
-    Dbref
-      .update({ status: Pump })
-  }
 
   const itemService = route.params;
 
@@ -129,9 +102,7 @@ const Pump = ({ navigation, route }) => {
         <View style={styles.DetailsScreenImageConatiner}>
           <Image source={itemService.img} style={styles.DetailsScreenImg} />
         </View>
-        <Switch
-          value={Pump}
-          onValueChange={TestEvent} />
+
         <View style={styles.DetailsScreenInfo}>
           <View style={styles.DetailsScreenInfoTitle}>
             <Text style={styles.DetailsScreenInfoTitleTxt}>Pumb</Text>
@@ -160,16 +131,16 @@ const Pump = ({ navigation, route }) => {
           </View>
 
           <View style={styles.ActionStyle}>
-            <TouchableOpacity onPress={() => setStartPumbFun()}>
-              <View style={styles.ActionStyleBtnGreen}>
-                <Text style={styles.ActionStyleBtnTxt}>ON</Text>
-              </View>
+            <TouchableOpacity
+              style={styles.ActionStyleBtnGreen}
+              onPress={() => setStartPumbFun()}>
+              <Text style={styles.ActionStyleBtnTxt}>ON</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setEdnPumbFun()}>
-              <View style={styles.ActionStyleBtnRed}>
-                <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
-              </View>
+            <TouchableOpacity
+              style={styles.ActionStyleBtnRed}
+              onPress={() => setEdnPumbFun()}>
+              <Text style={styles.ActionStyleBtnTxt}>OFF</Text>
             </TouchableOpacity>
 
             <View style={styles.ActionStyleTemp}>
@@ -185,396 +156,38 @@ const Pump = ({ navigation, route }) => {
 
         <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-            Pump frequency(Volt)
+            Pump Voltage (Volt)
           </Text>
           <Text style={styles.DetailsScreenInfoTitleTxt02}>
             0v - 400v
           </Text>
         </View>
-
-        <View style={styles.RNSpeedometerContainer}>
-          <View style={styles.RNSpeedometerItem}>
-            <RNSpeedometer
-              value={meterValue}
-              minValue={0}
-              maxValue={400}
-              allowedDecimals={0}
-              labels={[
-                {
-                  name: "PH1",
-                  labelColor: "red",
-                  activeBarColor: "green",
-                },
-
-                {
-                  name: "PH2",
-                  labelColor: "red",
-                  activeBarColor: "orange",
-                },
-                {
-                  name: "PH3",
-                  labelColor: "red",
-                  activeBarColor: "red",
-                },
-              ]}
-              needleImage={require("../../src/Uploads/sppedometreRed02.png")}
-              labelWrapperStyle={{
-                flexDirection: "row",
-                justifyContent: "flex-start",
-              }}
-              labelStyle={{
-                color: "red",
-                position: "absolute",
-                top: 24,
-                width: 72,
-                borderColor: "#111",
-                borderWidth: 2,
-                textAlign: "center",
-              }}
-              labelNoteStyle={{
-                // display:'none'
-                width: 72,
-                textAlign: "center",
-              }}
-            />
-          </View>
-
-          <View style={styles.RNSpeedometerItem}>
-            <RNSpeedometer
-              value={meterValue02}
-
-              minValue={0}
-              maxValue={400}
-              allowedDecimals={0}
-              innerCircleStyle={{
-                backgroundColor: Colors.dark,
-              }}
-              labels={[
-                {
-                  name: "P1",
-                  labelColor: "green",
-                  activeBarColor: "transparent",
-                },
-
-                {
-                  name: "PH11",
-                  labelColor: "green",
-                  activeBarColor: "transparent",
-                },
-                {
-                  name: "PH01",
-                  labelColor: "green",
-                  activeBarColor: "transparent",
-                },
-              ]}
-              imageStyle={{
-                backgroundColor: "transparent",
-              }}
-              wrapperStyle={{
-                backgroundColor: "transparent",
-              }}
-              outerCircleStyle={{
-                backgroundColor: "transparent",
-              }}
-              halfCircleStyle={{}}
-              labelWrapperStyle={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-              needleImage={require("../../src/Uploads/speedometreGreen.png")}
-              labelStyle={{
-                color: "green",
-                position: "absolute",
-                top: 24,
-                width: 72,
-                borderColor: "#111",
-                borderWidth: 2,
-                textAlign: "center",
-              }}
-            />
-          </View>
-
-          <View style={styles.RNSpeedometerItem}>
-            <RNSpeedometer
-              value={meterValue03}
-              minValue={0}
-              maxValue={400}
-              allowedDecimals={0}
-              innerCircleStyle={{
-                backgroundColor: Colors.dark,
-              }}
-              labels={[
-                {
-                  name: "PH12",
-                  labelColor: "blue",
-                  activeBarColor: "transparent",
-                },
-
-                {
-                  name: "PH52",
-                  labelColor: "blue",
-                  activeBarColor: "transparent",
-                },
-                {
-                  name: "PH62",
-                  labelColor: "blue",
-                  activeBarColor: "transparent",
-                },
-              ]}
-              imageStyle={{
-                backgroundColor: "transparent",
-              }}
-              wrapperStyle={{
-                backgroundColor: "transparent",
-              }}
-              outerCircleStyle={{
-                backgroundColor: "transparent",
-              }}
-              halfCircleStyle={{
-                backgroundColor: "transparent",
-              }}
-              labelWrapperStyle={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-              }}
-              labelStyle={{
-                color: "blue",
-                position: "absolute",
-                right: 0,
-                top: 24,
-                width: 72,
-                borderColor: "#111",
-                borderWidth: 2,
-                textAlign: "center",
-              }}
-              labelNoteStyle={{
-                width: 72,
-                textAlign: "center",
-              }}
-            />
-          </View>
+        <View style={styles.logValue}>
+          <PhaseOne />
+          <PhaseTwo />
+          <PhaseThree />
         </View>
+
         <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-            electric current(Amp)
+            Pump current(Amp)
           </Text>
           <Text style={styles.DetailsScreenInfoTitleTxt02}>
             0A - 100A
           </Text>
         </View>
-
-        <View style={styles.RNSpeedometerContainer}>
-          <View style={styles.RNSpeedometerItem}>
-            <RNSpeedometer
-              value={meterValue}
-              minValue={0}
-              maxValue={100}
-              allowedDecimals={0}
-              labels={[
-                {
-                  name: "P00",
-                  labelColor: "red",
-                  activeBarColor: "green",
-                },
-
-
-                {
-                  name: "P0",
-                  labelColor: "red",
-                  activeBarColor: "orange",
-                },
-              ]}
-              needleImage={require("../../src/Uploads/sppedometreRed02.png")}
-              labelWrapperStyle={{
-                flexDirection: "row",
-                justifyContent: "flex-start",
-              }}
-              labelStyle={{
-                color: "red",
-                position: "absolute",
-
-                top: 24,
-                width: 72,
-                borderColor: "#111",
-                borderWidth: 2,
-                textAlign: "center",
-              }}
-              labelNoteStyle={{
-                width: 72,
-                textAlign: "center",
-              }}
-            />
-          </View>
-
-          <View style={styles.RNSpeedometerItem}>
-            <RNSpeedometer
-              value={meterValue02}
-              minValue={0}
-              maxValue={100}
-              allowedDecimals={0}
-              innerCircleStyle={{
-                backgroundColor: Colors.dark,
-              }}
-              labels={[
-                {
-                  name: "P12",
-                  labelColor: "green",
-                  activeBarColor: "transparent",
-                },
-
-                {
-                  name: "P1222",
-                  labelColor: "green",
-                  activeBarColor: "transparent",
-                },
-                {
-                  name: "P45",
-                  labelColor: "green",
-                  activeBarColor: "transparent",
-                },
-              ]}
-              imageStyle={{
-                backgroundColor: "transparent",
-              }}
-              wrapperStyle={{
-                backgroundColor: "transparent",
-              }}
-              outerCircleStyle={{
-                backgroundColor: "transparent",
-              }}
-              halfCircleStyle={{}}
-              labelWrapperStyle={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-              needleImage={require("../../src/Uploads/speedometreGreen.png")}
-              labelStyle={{
-                color: "green",
-                position: "absolute",
-                top: 24,
-                width: 72,
-                borderColor: "#111",
-                borderWidth: 2,
-                textAlign: "center",
-              }}
-              labelNoteStyle={
-                {
-                  // display:'none'
-                }
-              }
-            />
-          </View>
-
-          <View style={styles.RNSpeedometerItem}>
-            <RNSpeedometer
-              value={meterValue03}
-              minValue={0}
-              maxValue={100}
-              allowedDecimals={0}
-              innerCircleStyle={{
-                backgroundColor: Colors.dark,
-              }}
-              labels={[
-                {
-                  name: "P2",
-                  labelColor: "blue",
-                  activeBarColor: "transparent",
-                },
-
-                {
-                  name: "P22",
-                  labelColor: "blue",
-                  activeBarColor: "transparent",
-                },
-                {
-                  name: "P222",
-                  labelColor: "blue",
-                  activeBarColor: "transparent",
-                },
-              ]}
-              imageStyle={{
-                backgroundColor: "transparent",
-              }}
-              wrapperStyle={{
-                backgroundColor: "transparent",
-              }}
-              outerCircleStyle={{
-                backgroundColor: "transparent",
-              }}
-              halfCircleStyle={{
-                backgroundColor: "transparent",
-              }}
-              labelWrapperStyle={{
-                flexDirection: "row",
-
-                justifyContent: "flex-end",
-              }}
-              labelStyle={{
-                color: "blue",
-                position: "absolute",
-                right: 0,
-                top: 24,
-                width: 72,
-                borderColor: "#111",
-                borderWidth: 2,
-                textAlign: "center",
-              }}
-              labelNoteStyle={{
-                width: 72,
-                textAlign: "center",
-              }}
-            />
-          </View>
+        <View style={styles.logValue}>
+          <AmpreOne startPumb={startPumb} />
+          <Ampretwo startPumb={startPumb} />
+          <AmpreThree startPumb={startPumb} />
         </View>
-
-
         <View style={styles.DetailsScreenInfoTitle02}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
-            Pumpb capacity(watt)
-          </Text>
-          <Text style={styles.DetailsScreenInfoTitleTxt02}>
-            0w - 100w
+            Pump puissance(watt)
           </Text>
         </View>
+        <Puissance />
 
-        <View style={styles.RNSpeedometerContainer}>
-          <View style={styles.RNSpeedometerItem}>
-            <RNSpeedometer
-              value={50}
-              minValue={0}
-              maxValue={100}
-              allowedDecimals={0}
-              innerCircleStyle={{
-                backgroundColor: Colors.dark,
-              }}
-              labels={[
-                {
-                  name: "PH0",
-                  labelColor: "red",
-                  activeBarColor: "orange",
-                },
-              ]}
-              needleImage={require("../../src/Uploads/sppedometreRed02.png")}
-              labelWrapperStyle={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-              labelStyle={{
-                color: "red",
-                position: "absolute",
-                top: 24,
-                width: 72,
-                borderColor: "#111",
-                borderWidth: 2,
-                textAlign: "center",
-              }}
-              labelNoteStyle={{
-                width: 72,
-                textAlign: "center",
-              }}
-            />
-          </View>
-        </View>
         <View style={styles.DetailsScreenInfoTitle}>
           <Text style={styles.DetailsScreenInfoTitleTxt}>
             Electricity Consumption (Kw)
@@ -607,22 +220,8 @@ const Pump = ({ navigation, route }) => {
             radiusDonutChart={80}
           />
         </View>
-
-        {/* <View style={styles.TestDataCpm}>
-          {DataDonutChart.map((item, index) => {
-            return (
-              <DonutChartComponentR_N_S
-                key={index}
-                percentageDonutChart={item.percentageDonutChartData}
-                colorDonutChart={item.colorDonutChartData}
-                delayDonutChart={500 + 100 * index}
-                maxDonutChart={100}
-              />
-            );
-          })}
-        </View> */}
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 
