@@ -22,21 +22,19 @@ const UploadItemsOrder = [
   {
     id: 3,
     name: "Pump Status",
-
     status: false,
     img: require("../Uploads/Pump_Status/02.png"),
     description:
-    'In this section we show our pump status and activity status, running time, and power consumption. We can also control it, turn it on and off remotely',
+      'In this section we show our pump status and activity status, running time, and power consumption. We can also control it, turn it on and off remotely',
     navigatTo: "PumbScreen",
   },
 
   {
     id: 4,
     name: "Water Tank",
-
     status: true,
     img: require("../Uploads/Water_Tank/02.png"),
-    description: "Water Tank Description",
+    description: "Check level of water tank ",
     navigatTo: "WeatherTank",
   },
   {
@@ -81,7 +79,7 @@ const UploadItemsOrder = [
     navigatTo: "Surveillance",
   },
 
-  
+
 
   {
     id: 10,
