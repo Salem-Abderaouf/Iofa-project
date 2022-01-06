@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import auth from "@react-native-firebase/auth"
 import database from "@react-native-firebase/database"
 import HomeScreen from './Screens/HomeScreen';
@@ -20,6 +20,7 @@ import Login from './Screens/Auth/Login';
 import Register from './Screens/Auth/Register';
 import Reset from './Screens/Auth/PasswordReset';
 import Home from './Screens/Home';
+import Notifications from './Screens/Notifications';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App() {
   const [user, setUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  LogBox.ignoreAllLogs()
   useEffect(() => {
     const usersRef = database();
     auth().onAuthStateChanged((user) => {
@@ -71,6 +73,7 @@ export default function App() {
               :
               <>
                 <Stack.Screen name="Main" component={Home} options={globalHeaderOptions} />
+                <Stack.Screen name="Notifications" component={Notifications} options={globalHeaderOptions} />
                 <Stack.Screen name="PumbScreen" component={Pump} options={globalHeaderOptions} />
                 <Stack.Screen name="PumpWatering" component={PumpWatering} options={globalHeaderOptions} />
                 <Stack.Screen name="DashbardAndMap" component={DashbardAndMap} options={globalHeaderOptions} />
