@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width - 60,
     height: 65,
     borderColor: Colors.dark,
-    color: Colors.Black,
+    color: Colors.dark,
     borderRadius: 12,
     borderWidth: 1,
     paddingLeft: 20,

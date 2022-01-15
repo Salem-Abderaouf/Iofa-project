@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark,
     borderRadius: 12,
     borderWidth: 1,
-    color: Colors.Black,
+    color: Colors.dark,
     paddingLeft: 20,
   },
   buttonText: {
